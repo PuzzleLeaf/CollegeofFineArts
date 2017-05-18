@@ -1,4 +1,4 @@
-package puzzleleaf.tistory.com.collegeoffinearts;
+package crossit.com.collegeoffinearts;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
