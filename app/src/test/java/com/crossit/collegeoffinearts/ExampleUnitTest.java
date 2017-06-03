@@ -1,4 +1,4 @@
-package crossit.com.collegeoffinearts;
+package com.crossit.collegeoffinearts;
 
 import org.junit.Test;
 

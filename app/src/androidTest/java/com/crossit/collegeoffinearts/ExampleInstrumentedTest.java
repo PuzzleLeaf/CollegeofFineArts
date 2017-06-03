@@ -1,4 +1,4 @@
-package crossit.com.collegeoffinearts;
+package com.crossit.collegeoffinearts;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("crossit.com.collegeoffinearts", appContext.getPackageName());
+        assertEquals("com.crossit.collegeoffinearts", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package crossit.com.collegeoffinearts.splash;
+package com.crossit.collegeoffinearts.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,8 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
-import crossit.com.collegeoffinearts.MainActivity;
-import crossit.com.collegeoffinearts.R;
+import com.crossit.collegeoffinearts.MainActivity;
+import com.crossit.collegeoffinearts.R;
 
 
 public class Splash extends AppCompatActivity {
