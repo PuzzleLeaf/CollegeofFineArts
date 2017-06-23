@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <com.crossit.collegeoffinearts.Tab.board.FontTextView
+            android:id="@+id/fontTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="구하기 게시판 입니다."
+            android:textColor="#6d808d"
+            android:textSize="12sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="right|center">
+            <Spinner
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginRight="4dp"
+                android:background="@drawable/filter"
+                android:id="@+id/find_board_spinner"/>
+            <com.crossit.collegeoffinearts.Tab.board.FontTextView
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:textSize="13sp"
+                android:id="@+id/find_board_spinner_text"
+                android:gravity="center"
+                android:text="판매 완료"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#f5f5f5">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:id="@+id/find_board">
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</LinearLayout>

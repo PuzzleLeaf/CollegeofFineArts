@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Collegeoffinearts</string>
+    <string name="app_name">모여라 미대생</string>
+
+    <string-array name="option">
+        <item>최신</item>
+        <item>조회</item>
+        <item>판매 완료</item>
+    </string-array>
 </resources>

@@ -2,53 +2,112 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="#ffffff"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--Custom Toolbar-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        app:contentInsetStart="0dp"
-        android:background="#000000">
+        android:layout_height="50dp"
+        android:background="#ffffff">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:orientation="horizontal">
-            <Button
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/mypage"
+                android:src="@drawable/my"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:layout_weight="1">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
-                    android:textSize="20sp"
-                    android:text="Hello!"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/logo"/>
             </LinearLayout>
-            <Button
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
+            <ImageView
+                android:id="@+id/likepage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/like" />
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000000"
-        app:tabTextColor="#ffffff"
-        app:tabSelectedTextColor="#fff025"
-        app:tabIndicatorColor="#ffffff"
-        android:minHeight="?attr/actionBarSize" />
-
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#ffffff"
+        app:tabIndicatorColor="#ffffff" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#8a8a8a"/>
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dadbd6"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/search"/>
+            <com.crossit.collegeoffinearts.Tab.board.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#41555c"
+                android:text="검색"/>
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#dadbd6"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/write_btn"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/write"/>
+            <com.crossit.collegeoffinearts.Tab.board.FontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#41555c"
+                android:text="글쓰기"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
