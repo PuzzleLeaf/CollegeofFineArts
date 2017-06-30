@@ -10,7 +10,7 @@
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
-        <com.crossit.collegeoffinearts.Tab.board.FontTextView
+        <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
             android:id="@+id/fontTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

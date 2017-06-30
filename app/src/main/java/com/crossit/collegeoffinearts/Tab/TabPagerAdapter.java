@@ -3,17 +3,15 @@ package com.crossit.collegeoffinearts.Tab;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
-import com.crossit.collegeoffinearts.Tab.Exhibition.Exhibition;
-import com.crossit.collegeoffinearts.Tab.Free.Free;
-import com.crossit.collegeoffinearts.Tab.Like.Like;
-import com.crossit.collegeoffinearts.Tab.MyPage.MyPage;
-import com.crossit.collegeoffinearts.Tab.UsedArticle.UsedArticle;
-import com.crossit.collegeoffinearts.Tab.Find.Find;
-import com.crossit.collegeoffinearts.Tab.Write.Write;
+import com.crossit.collegeoffinearts.Tab.Fragment.Exhibition;
+import com.crossit.collegeoffinearts.Tab.Fragment.Free;
+import com.crossit.collegeoffinearts.Tab.Fragment.Like;
+import com.crossit.collegeoffinearts.Tab.Fragment.MyPage;
+import com.crossit.collegeoffinearts.Tab.Fragment.UsedArticle;
+import com.crossit.collegeoffinearts.Tab.Fragment.Find;
+import com.crossit.collegeoffinearts.Tab.Fragment.Write;
 
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -79,19 +77,6 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
             case 3:
                 fragment = new Free();
                 break;
-        }
-        //글쓰기 메뉴로 진입하기.
-        if(!Write.isEmpty()) {
-            if (Write.getString("type").equals("write"))
-                fragment = new Write();
-            else if(Write.getString("type").equals("like"))
-                fragment = new Like();
-            else if(Write.getString("type").equals("mypage"))
-                fragment = new MyPage();
-            else if(Write.getString("type").equals("search")) {
-
-            }
-            fragment.setArguments(Write);
         }
         return fragment;
     }

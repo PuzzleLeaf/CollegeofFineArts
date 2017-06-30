@@ -1,4 +1,4 @@
-package com.crossit.collegeoffinearts.Tab.board;
+package com.crossit.collegeoffinearts.Tab.CustomView;
 
 import android.content.Context;
 import android.graphics.Typeface;

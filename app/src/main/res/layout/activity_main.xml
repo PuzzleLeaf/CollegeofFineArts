@@ -77,7 +77,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/search"/>
-            <com.crossit.collegeoffinearts.Tab.board.FontTextView
+            <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
@@ -101,7 +101,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/write"/>
-            <com.crossit.collegeoffinearts.Tab.board.FontTextView
+            <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"

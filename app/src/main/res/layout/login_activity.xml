@@ -19,11 +19,12 @@
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
             android:textSize="14sp"
-            android:text="● 랜덤닉네임 ●"/>
+            android:text="● 로그인 페이지 ●"/>
         <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:id="@+id/login_nickname"
             android:textColor="#ffffff"
             android:textSize="40sp"
             android:text="귀여운 물감"/>
@@ -34,16 +35,16 @@
             android:layout_marginTop="20dp"
             android:textColor="#ffffff"
             android:textSize="14sp"
-            android:text="로그인 버튼을 누른 후에 글을 쓰실 수 있습니다!\n맘에 안드셔도 어쩔 수 없습니다:)"/>
+            android:text="당신의 새로운 닉네임 입니다.\n로그인 버튼을 누른 후에 글을 쓰실 수 있습니다!\n맘에 안드셔도 어쩔 수 없습니다:)"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="120dp">
-        <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="#ffffff"
-            android:text="Google로그인"/>
+            android:layout_centerInParent="true"
+            android:visibility="visible" />
     </LinearLayout>
 </LinearLayout>

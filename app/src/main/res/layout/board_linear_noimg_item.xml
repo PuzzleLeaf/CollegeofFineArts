@@ -18,7 +18,7 @@
             android:layout_height="70dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
-            <com.crossit.collegeoffinearts.Tab.board.FontTextView
+            <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
                 android:id="@+id/board_txt"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -36,7 +36,7 @@
                     android:gravity="center_vertical"
                     android:textSize="10sp"
                     android:text="17-06-23"/>
-                <com.crossit.collegeoffinearts.Tab.board.FontTextView
+                <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -55,7 +55,7 @@
                     android:layout_height="12dp"
                     android:layout_marginRight="5dp"
                     android:src="@drawable/view_count" />
-                <com.crossit.collegeoffinearts.Tab.board.FontTextView
+                <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textSize="12sp"

@@ -15,19 +15,20 @@
         android:layout_height="250dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
+        android:paddingBottom="30dp"
         android:gravity="center"
         android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="닉네임"/>
-            <com.crossit.collegeoffinearts.Tab.board.FontTextView
+            <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:textSize="30sp"
                 android:text="귀여운 물감"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(google@gmail.com)"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

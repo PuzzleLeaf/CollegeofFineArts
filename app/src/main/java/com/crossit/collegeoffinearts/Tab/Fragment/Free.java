@@ -1,10 +1,9 @@
-package com.crossit.collegeoffinearts.Tab.Free;
+package com.crossit.collegeoffinearts.Tab.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.crossit.collegeoffinearts.R;
-import com.crossit.collegeoffinearts.Tab.board.RecyclerViewLinearItem;
-import com.crossit.collegeoffinearts.Tab.board.RecyclerViewNoImageLinearItem;
+import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewNoImageLinearItem;
 
 import java.util.ArrayList;
 

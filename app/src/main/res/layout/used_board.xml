@@ -8,7 +8,7 @@
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
-        <com.crossit.collegeoffinearts.Tab.board.FontTextView
+        <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -23,7 +23,7 @@
             android:backgroundTint="#dadbd6"
             android:layout_marginBottom="10dp"
             android:background="#827c7c"/>
-        <com.crossit.collegeoffinearts.Tab.board.FontTextView
+        <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
             android:layout_width="80dp"
             android:gravity="center"
             android:textColor="#dadbd6"
@@ -41,7 +41,7 @@
                 android:layout_marginRight="4dp"
                 android:background="@drawable/filter"
                 android:id="@+id/used_board_spinner"/>
-            <com.crossit.collegeoffinearts.Tab.board.FontTextView
+            <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
                 android:layout_width="60dp"
                 android:layout_height="40dp"
                 android:textSize="13sp"

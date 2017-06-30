@@ -1,4 +1,4 @@
-package com.crossit.collegeoffinearts.Tab.board;
+package com.crossit.collegeoffinearts.Tab.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,31 +12,27 @@ import com.crossit.collegeoffinearts.R;
 
 import java.util.ArrayList;
 
-public class RecyclerViewItem extends RecyclerView.Adapter<RecyclerViewItem.ViewHolder> {
+public class RecyclerViewNoImageLinearItem extends RecyclerView.Adapter<RecyclerViewNoImageLinearItem.ViewHolder> {
 
     private LayoutInflater mInflater;
-    ArrayList<Integer> resId;
     ArrayList<String> txt;
-
-    public RecyclerViewItem(Context context, ArrayList<Integer> resId, ArrayList<String> txt)
+    public RecyclerViewNoImageLinearItem(Context context, ArrayList<String> txt)
     {
         this.mInflater = LayoutInflater.from(context);
-        this.resId = resId;
         this.txt = txt;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.board_item, parent,false);
+        View view = mInflater.inflate(R.layout.board_linear_noimg_item, parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
+
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-
         holder.myTextView.setText(txt.get(position));
-        holder.myImageView.setImageResource(resId.get(position));
         holder.myBoardLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,12 +53,10 @@ public class RecyclerViewItem extends RecyclerView.Adapter<RecyclerViewItem.View
 
     @Override
     public int getItemCount() {
-        return resId.size();
+        return txt.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-        public ImageView myImageView;
         public TextView myTextView;
         public ImageView myBoardLike;
         public boolean boardLikeFlag = false;
@@ -70,7 +64,6 @@ public class RecyclerViewItem extends RecyclerView.Adapter<RecyclerViewItem.View
         public ViewHolder(View itemView)
         {
             super(itemView);
-            myImageView =(ImageView)itemView.findViewById(R.id.board_img);
             myTextView = (TextView)itemView.findViewById(R.id.board_txt);
             myBoardLike = (ImageView)itemView.findViewById(R.id.board_like);
 

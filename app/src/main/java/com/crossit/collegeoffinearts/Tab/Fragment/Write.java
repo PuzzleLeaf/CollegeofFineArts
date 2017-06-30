@@ -1,6 +1,5 @@
-package com.crossit.collegeoffinearts.Tab.Write;
+package com.crossit.collegeoffinearts.Tab.Fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -8,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.crossit.collegeoffinearts.R;
 import com.crossit.collegeoffinearts.Tab.Dialog.CameraDialog;
-import com.crossit.collegeoffinearts.Tab.board.FontEditText;
+import com.crossit.collegeoffinearts.Tab.CustomView.FontEditText;
 
 public class Write extends Fragment {
 

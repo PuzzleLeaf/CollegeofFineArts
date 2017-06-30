@@ -7,10 +7,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="#ffffff">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/mypage"
+                android:src="@drawable/my"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/logo"/>
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/likepage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/like" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:background="#ffffff"
         android:gravity="center_vertical"
         android:orientation="horizontal">
-        <com.crossit.collegeoffinearts.Tab.board.FontTextView
+        <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -24,7 +58,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical">
-        <com.crossit.collegeoffinearts.Tab.board.FontEditText
+        <com.crossit.collegeoffinearts.Tab.CustomView.FontEditText
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
@@ -33,7 +67,7 @@
             android:hint="제목"
             android:textColorHint="#b1b1b1"
             android:textSize="20sp" />
-        <com.crossit.collegeoffinearts.Tab.board.FontEditText
+        <com.crossit.collegeoffinearts.Tab.CustomView.FontEditText
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -54,7 +88,7 @@
                 android:layout_height="80dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/write_img" />
-            <com.crossit.collegeoffinearts.Tab.board.FontTextView
+            <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:gravity="bottom"

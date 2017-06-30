@@ -1,16 +1,23 @@
 package com.crossit.collegeoffinearts;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.crossit.collegeoffinearts.Tab.TabIcon;
 import com.crossit.collegeoffinearts.Tab.TabPagerAdapter;
+import com.crossit.collegeoffinearts.Tab.WriteBoard;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
@@ -25,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     ImageView mypage;
     ImageView likePage;
 
+    //로그인 체크
+    FirebaseAuth.AuthStateListener mAuthListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         WriteBtnInit();
         myPageBtnInit();
         likePageBtnInit();
+
 
     }
 
@@ -95,12 +106,20 @@ public class MainActivity extends AppCompatActivity {
         write_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resReset();
-                pagerAdapter.setBundle(String.valueOf(tabLayout.getSelectedTabPosition()),"write");
-                pagerAdapter.notifyDataSetChanged();
+                if(myAuth.userId.equals("non"))
+                {
+                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(getApplicationContext(), WriteBoard.class);
+                    intent.putExtra("write", String.valueOf(tabLayout.getSelectedTabPosition()));
+                    startActivity(intent);
+                }
             }
         });
     }
+
 
     //back버튼 클릭시 원래 메뉴로
     @Override
@@ -149,6 +168,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //로그인 정보가 있는지 확인
+    private void LoginCheck()
+    {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user==null) {
+                    myAuth.userId = "non";
+                }
+            }
+        };
     }
 
 }

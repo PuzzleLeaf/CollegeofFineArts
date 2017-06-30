@@ -1,0 +1,187 @@
+{
+  "project_info": {
+    "project_number": "653195207705",
+    "firebase_url": "https://test-e18ed.firebaseio.com",
+    "project_id": "test-e18ed",
+    "storage_bucket": "test-e18ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653195207705:android:fd18b782dffe98bb",
+        "android_client_info": {
+          "package_name": "puzzleleaf.tistory.com.firebasetest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653195207705-503bp415nsktj5mae35u516eakt5ps08.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "puzzleleaf.tistory.com.firebasetest",
+            "certificate_hash": "29b46d99cbed809091a3ead383e285d0946fbfc6"
+          }
+        },
+        {
+          "client_id": "653195207705-u655uip4e0thvjmpbpqq880vgmjd8f5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN8ks6XpQ6my2jQ7qajJlpkQxcW25tNNQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653195207705-u655uip4e0thvjmpbpqq880vgmjd8f5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653195207705:android:aeeca284b1b43e09",
+        "android_client_info": {
+          "package_name": "puzzleleaf.tistory.com.firebaseboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653195207705-juhnbepu81js63jju28sab2t0ae05i9d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "puzzleleaf.tistory.com.firebaseboard",
+            "certificate_hash": "29b46d99cbed809091a3ead383e285d0946fbfc6"
+          }
+        },
+        {
+          "client_id": "653195207705-u655uip4e0thvjmpbpqq880vgmjd8f5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN8ks6XpQ6my2jQ7qajJlpkQxcW25tNNQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653195207705-u655uip4e0thvjmpbpqq880vgmjd8f5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653195207705:android:fcfef757a832647b",
+        "android_client_info": {
+          "package_name": "com.google.firebase.quickstart.database"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653195207705-6fakojhs2dvkhfqt5eoos3ptl6ofhkl0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.firebase.quickstart.database",
+            "certificate_hash": "29b46d99cbed809091a3ead383e285d0946fbfc6"
+          }
+        },
+        {
+          "client_id": "653195207705-u655uip4e0thvjmpbpqq880vgmjd8f5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN8ks6XpQ6my2jQ7qajJlpkQxcW25tNNQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653195207705-u655uip4e0thvjmpbpqq880vgmjd8f5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653195207705:android:47d26a718309d1c5",
+        "android_client_info": {
+          "package_name": "com.crossit.collegeoffinearts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653195207705-c4r09me212dvualpcdtgoiml22oe4v17.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crossit.collegeoffinearts",
+            "certificate_hash": "29b46d99cbed809091a3ead383e285d0946fbfc6"
+          }
+        },
+        {
+          "client_id": "653195207705-u655uip4e0thvjmpbpqq880vgmjd8f5e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN8ks6XpQ6my2jQ7qajJlpkQxcW25tNNQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653195207705-u655uip4e0thvjmpbpqq880vgmjd8f5e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

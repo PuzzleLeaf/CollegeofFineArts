@@ -1,13 +1,10 @@
-package com.crossit.collegeoffinearts.Tab.Exhibition;
+package com.crossit.collegeoffinearts.Tab.Fragment;
 
-import android.media.Image;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.crossit.collegeoffinearts.R;
-import com.crossit.collegeoffinearts.Tab.board.RecyclerViewItem;
-import com.crossit.collegeoffinearts.Tab.board.RecyclerViewLinearItem;
+import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewItem;
+import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewLinearItem;
 
 import java.util.ArrayList;
 
