@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        overridePendingTransition(0,0);
 
         //Google Login
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -74,20 +74,20 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-//                    String userId = user.getUid();
-//                    String temp = user.getEmail();
-//                    int idx = temp.indexOf("@");
-//                    String userEmail = temp.substring(0,idx);
-//
-//                    sharedPref = getSharedPreferences("key",MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = sharedPref.edit();
-//                    editor.putString("firebaseKey",userId);
-//                    editor.putString("firebaseEmail",userEmail);
-//                    editor.putString("firebaseName",nickName.getText().toString());
-//                    editor.commit();
-//
-//                    myAuth.userEmail = userEmail;
-//                    myAuth.userId = userId;
+                    String userId = user.getUid();
+                    String temp = user.getEmail();
+                    int idx = temp.indexOf("@");
+                    String userEmail = temp.substring(0,idx);
+
+                    sharedPref = getSharedPreferences("key",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("firebaseKey",userId);
+                    editor.putString("firebaseEmail",userEmail);
+                    editor.putString("firebaseName",nickName.getText().toString());
+                    editor.commit();
+
+                    myAuth.userEmail = userEmail;
+                    myAuth.userId = userId;
                 } else {
                    resetData();
                 }
@@ -106,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+
     @Override
     public void onStart() {
         super.onStart();
@@ -186,5 +188,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(0,0);
+    }
 }

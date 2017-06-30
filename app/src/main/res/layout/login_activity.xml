@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#00ffffff"
     android:id="@+id/camera_dialog"
-    android:background="#96000000"
     android:gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="#00ffffff"
         android:layout_weight="1"
         android:gravity="center"
         android:layout_marginBottom="15dp"
@@ -18,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
+            android:background="#00ffffff"
             android:textSize="14sp"
             android:text="● 로그인 페이지 ●"/>
         <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
@@ -25,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:id="@+id/login_nickname"
+            android:background="#00ffffff"
             android:textColor="#ffffff"
             android:textSize="40sp"
             android:text="귀여운 물감"/>
@@ -33,18 +36,21 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="20dp"
+            android:background="#00ffffff"
             android:textColor="#ffffff"
             android:textSize="14sp"
             android:text="당신의 새로운 닉네임 입니다.\n로그인 버튼을 누른 후에 글을 쓰실 수 있습니다!\n맘에 안드셔도 어쩔 수 없습니다:)"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="120dp">
+        android:layout_height="wrap_content"
+        android:background="#00ffffff"
+        android:layout_marginBottom="60dp">
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_btn"
             android:layout_width="wrap_content"
+            android:background="#00ffffff"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:visibility="visible" />
     </LinearLayout>
 </LinearLayout>

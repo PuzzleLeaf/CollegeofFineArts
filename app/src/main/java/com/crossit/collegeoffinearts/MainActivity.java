@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setOffscreenPageLimit(4);
 
         // 뷰 페이저 설정
         pagerAdapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
@@ -106,7 +107,8 @@ public class MainActivity extends AppCompatActivity {
         write_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myAuth.userId.equals("non"))
+                Log.d("qwe",myAuth.userId);
+                if(myAuth.userId == null || myAuth.userId.equals("non"))
                 {
                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                     startActivity(intent);
@@ -168,20 +170,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    //로그인 정보가 있는지 확인
-    private void LoginCheck()
-    {
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user==null) {
-                    myAuth.userId = "non";
-                }
-            }
-        };
     }
 
 }

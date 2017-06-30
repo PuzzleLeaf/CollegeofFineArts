@@ -1,36 +1,55 @@
 package com.crossit.collegeoffinearts.Tab.Fragment;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.crossit.collegeoffinearts.R;
+import com.crossit.collegeoffinearts.Tab.Adapter.BoardGridItem;
+import com.crossit.collegeoffinearts.Tab.Adapter.BoardLinearItem;
 import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewItem;
 import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewLinearItem;
+import com.crossit.collegeoffinearts.Tab.Dialog.Loading;
+import com.crossit.collegeoffinearts.Tab.models.BoardObject;
+import com.crossit.collegeoffinearts.myDataBase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class UsedArticle extends Fragment {
 
+    View view;
+    //swipe
+    SwipeRefreshLayout swipeRefreshLayout;
     //RecyclerView
-    private RecyclerViewItem gridAdapter;
-    private RecyclerViewLinearItem linearAdapter;
+    private BoardGridItem gridAdapter;
+    private BoardLinearItem linearAdapter;
     private LinearLayoutManager linearLayoutManager;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
+    private GridLayoutManager gridLayoutManager;
     private RecyclerView recyclerView;
 
-    private ArrayList<Integer> resId;
-    private ArrayList<String> txt;
+    private ArrayList<BoardObject> boardObj;
 
     //Spinner 변수 모음
     private Spinner spinner;
@@ -41,37 +60,111 @@ public class UsedArticle extends Fragment {
     private ImageView changeView;
     private boolean changeFlag = false;
 
+    //게시판 종류
+    private TextView usedBuy;
+    private TextView usedSell;
+    private boolean usedFlag = false;
+    private String buy = "#827c7c";
+    private String sell = "#dadbd6";
+
+    Loading loading;
+
+    //데이터 베이스
+    DatabaseReference myRef;
+    private String board;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.used_board, container, false);
+        view = inflater.inflate(R.layout.used_board, container, false);
 
-        dataInit();
+        loading = new Loading(view.getContext());
+        boardObj = new ArrayList<>();
+
+        textViewInit(view);
+        recyclerViewInit(view);
         spinnerInit(view);
         changeViewInit(view);
-        recyclerViewInit(view);
+
+        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.used_swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                dataInit(view);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         return view;
     }
 
-    //recyclerViewInit 보다 먼저 나와야 함
-    void dataInit()
+    @Override
+    public void onResume() {
+        super.onResume();
+        dataInit(view);
+
+    }
+
+    private void textViewInit(View view)
     {
-        resId = new ArrayList<>();
-        txt = new ArrayList<>();
-        for(int i=0;i<3;i++) {
-            resId.add(R.drawable.u_sample);
-            txt.add("붓 4종세트 싸게 팔아요");
-            resId.add(R.drawable.u_sample2);
-            txt.add("나이프 팔아요!!");
-            resId.add(R.drawable.u_sample3);
-            txt.add("최저가!! 보고가세요");
-            resId.add(R.drawable.u_sample4);
-            txt.add("이젤 판매합니다[급처]");
-            resId.add(R.drawable.u_sample5);
-            txt.add("색연필 사실분?");
-            resId.add(R.drawable.u_sample6);
-            txt.add("그때 그 물통");
-        }
+        usedBuy = (TextView)view.findViewById(R.id.used_buy);
+        usedSell = (TextView)view.findViewById(R.id.used_sell);
+        usedBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!usedFlag) {
+                    usedBuy.setTextColor(Color.parseColor(buy));
+                    usedSell.setTextColor(Color.parseColor(sell));
+                }
+                usedFlag = true;
+                dataInit(v);
+            }
+        });
+        usedSell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(usedFlag) {
+                    usedSell.setTextColor(Color.parseColor(buy));
+                    usedBuy.setTextColor(Color.parseColor(sell));
+                }
+                usedFlag = false;
+                dataInit(v);
+            }
+        });
+    }
+
+    //recyclerViewInit 보다 먼저 나와야 함
+    void dataInit(View view)
+    {
+        loading.show();
+        if(!usedFlag)
+            myRef = myDataBase.database.getReference("중고").child("팝니다").child("게시판");
+        else
+            myRef = myDataBase.database.getReference("중고").child("삽니다").child("게시판");
+
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                boardObj.clear();
+                while(iterator.hasNext())
+                {
+                    BoardObject boardObject = iterator.next().getValue(BoardObject.class);
+                    boardObj.add(0,boardObject);
+                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading.dismiss();
+                    }
+                }).start();
+                loadView();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -109,13 +202,17 @@ public class UsedArticle extends Fragment {
     void recyclerViewInit(View view)
     {
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        linearLayoutManager = new LinearLayoutManager(getContext());
-        linearAdapter = new RecyclerViewLinearItem(getContext(), resId,txt);
-        gridAdapter = new RecyclerViewItem(getContext(), resId,txt);
+        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        staggeredGridLayoutManager.setOrientation(StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager.setMeasurementCacheEnabled(true);
 
+        gridLayoutManager = new GridLayoutManager(getContext(),2);
+
+        linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView = (RecyclerView) view.findViewById(R.id.used_board);
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        recyclerView.setAdapter(gridAdapter);
+        gridAdapter = new BoardGridItem(getContext(), boardObj);
+        linearAdapter = new BoardLinearItem(getContext(),boardObj);
+
     }
 
     void changeViewInit(View view)
@@ -132,12 +229,32 @@ public class UsedArticle extends Fragment {
                 else
                 {
                     changeView.setImageResource(R.drawable.board_align);
-                    recyclerView.setLayoutManager(staggeredGridLayoutManager);
+                    recyclerView.setLayoutManager(gridLayoutManager);
                     recyclerView.setAdapter(gridAdapter);
                 }
                 changeFlag = !changeFlag;
             }
         });
+    }
+
+    void loadView()
+    {
+        linearAdapter.notifyDataSetChanged();
+        gridAdapter.notifyDataSetChanged();
+
+
+
+        if(changeFlag)
+        {
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(linearAdapter);
+        }
+        else
+        {
+            recyclerView.setLayoutManager(gridLayoutManager);
+            recyclerView.setAdapter(gridAdapter);
+        }
+
     }
 
 }

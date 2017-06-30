@@ -49,6 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
+                    android:id="@+id/board_date"
                     android:textSize="10sp"
                     android:text="17-06-23"/>
                 <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
@@ -56,6 +57,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
+                    android:id="@+id/board_name"
                     android:textSize="10sp"
                     android:layout_marginLeft="5dp"
                     android:text="귀여운 물감"/>

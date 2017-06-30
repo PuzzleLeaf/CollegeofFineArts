@@ -22,6 +22,9 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         sharedPref = getSharedPreferences("key",MODE_PRIVATE);
+        myAuth.userId = sharedPref.getString("firebaseKey", "non");
+        myAuth.userEmail = sharedPref.getString("firebaseEmail",null);
+        myAuth.userName = sharedPref.getString("firebaseName",null);
 
 
 
@@ -37,16 +40,6 @@ public class Splash extends AppCompatActivity {
         };
 
         handler.sendEmptyMessageDelayed(0,SPLASH_DISPLAY_TIME);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        myAuth.userId = sharedPref.getString("firebaseKey", "non");
-        myAuth.userEmail = sharedPref.getString("firebaseEmail",null);
-        myAuth.userName = sharedPref.getString("firebaseName",null);
-
     }
 
     @Override
