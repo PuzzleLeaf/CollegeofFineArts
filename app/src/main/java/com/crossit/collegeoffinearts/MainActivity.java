@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         write_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("qwe",myAuth.userId);
                 if(myAuth.userId == null || myAuth.userId.equals("non"))
                 {
                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);

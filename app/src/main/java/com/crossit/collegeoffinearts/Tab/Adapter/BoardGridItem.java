@@ -1,6 +1,7 @@
 package com.crossit.collegeoffinearts.Tab.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,8 +12,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.crossit.collegeoffinearts.BoardContentsActivity;
 import com.crossit.collegeoffinearts.R;
 import com.crossit.collegeoffinearts.Tab.models.BoardObject;
+import com.crossit.collegeoffinearts.myDataBase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 
 import java.util.ArrayList;
 
@@ -20,11 +28,13 @@ public class BoardGridItem extends RecyclerView.Adapter<BoardGridItem.ViewHolder
 
     private LayoutInflater mInflater;
     ArrayList<BoardObject> obj;
+    int boardCheck; // 1 = 삽니다 / 2= 팝니다 / 3= 전시
 
-    public BoardGridItem(Context context, ArrayList<BoardObject> obj)
+    public BoardGridItem(Context context, ArrayList<BoardObject> obj, int boardCheck)
     {
         this.mInflater = LayoutInflater.from(context);
         this.obj = obj;
+        this.boardCheck = boardCheck;
     }
 
     @Override
@@ -35,7 +45,7 @@ public class BoardGridItem extends RecyclerView.Adapter<BoardGridItem.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         holder.myTextView.setText(obj.get(position).getTitle());
         Glide.with(mInflater.getContext()).load(obj.get(position).getImage()).into(holder.myImageView);
@@ -55,6 +65,49 @@ public class BoardGridItem extends RecyclerView.Adapter<BoardGridItem.ViewHolder
                 holder.boardLikeFlag = !holder.boardLikeFlag;
             }
         });
+        holder.myBoardFrame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                countInc(position,holder);
+            }
+        });
+    }
+
+    public void countInc(final int position, final ViewHolder holder)
+    {
+        try
+        {
+            DatabaseReference mRef;
+            if(boardCheck == 1)
+                mRef = myDataBase.database.getReference("중고").child("삽니다").child("게시판").child(obj.get(position).getBoard_id());
+            else if(boardCheck == 2)
+                mRef = myDataBase.database.getReference("중고").child("팝니다").child("게시판").child(obj.get(position).getBoard_id());
+            else
+                mRef = myDataBase.database.getReference("전시").child("게시판").child(obj.get(position).getBoard_id());
+
+            mRef.runTransaction(new Transaction.Handler() {
+                @Override
+                public Transaction.Result doTransaction(MutableData mutableData) {
+                    BoardObject boardObject = mutableData.getValue(BoardObject.class);
+                    int count = Integer.parseInt(boardObject.getCount())+1;
+                    boardObject.setCount(String.valueOf(count));
+                    mutableData.setValue(boardObject);
+                    return Transaction.success(mutableData);
+                }
+
+                @Override
+                public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+                    Intent intent = new Intent(holder.context, BoardContentsActivity.class);
+                    intent.putExtra("check",String.valueOf(boardCheck));
+                    intent.putExtra("board",obj.get(position).getBoard_id());
+                    holder.context.startActivity(intent);
+                }
+            });
+        }
+        catch (IndexOutOfBoundsException ie)
+        {
+            Log.d("qwe","Error");
+        }
     }
 
     @Override
@@ -64,6 +117,7 @@ public class BoardGridItem extends RecyclerView.Adapter<BoardGridItem.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        public Context context;
         public ImageView myImageView;
         public TextView myTextView;
         public ImageView myBoardLike;
@@ -76,6 +130,7 @@ public class BoardGridItem extends RecyclerView.Adapter<BoardGridItem.ViewHolder
         public ViewHolder(View itemView)
         {
             super(itemView);
+            context = itemView.getContext();
             myImageView =(ImageView)itemView.findViewById(R.id.board_img);
             myTextView = (TextView)itemView.findViewById(R.id.board_txt);
             myBoardLike = (ImageView)itemView.findViewById(R.id.board_like);

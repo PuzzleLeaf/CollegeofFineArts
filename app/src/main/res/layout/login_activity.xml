@@ -22,7 +22,7 @@
             android:background="#00ffffff"
             android:textSize="14sp"
             android:text="● 로그인 페이지 ●"/>
-        <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
+        <com.crossit.collegeoffinearts.Tab.CustomView.FontEditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

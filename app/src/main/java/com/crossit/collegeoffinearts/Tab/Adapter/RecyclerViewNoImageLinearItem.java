@@ -24,7 +24,7 @@ public class RecyclerViewNoImageLinearItem extends RecyclerView.Adapter<Recycler
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.board_linear_noimg_item, parent,false);
+        View view = mInflater.inflate(R.layout.board_linear_noimage_item, parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;

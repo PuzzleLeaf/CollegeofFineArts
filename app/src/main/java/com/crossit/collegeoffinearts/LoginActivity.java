@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sharedPref;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private GoogleApiClient mGoogleApiClient;
-    private TextView nickName;
+    private EditText nickName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        nickName = (TextView)findViewById(R.id.login_nickname);
+        nickName = (EditText) findViewById(R.id.login_nickname);
 
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_btn);
         signInButton.setSize(SignInButton.SIZE_STANDARD);

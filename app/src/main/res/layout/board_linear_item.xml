@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:gravity="center"
+        android:id="@+id/board_frame"
         android:padding="2dp"
         android:orientation="horizontal">
         <LinearLayout
@@ -83,6 +84,7 @@
                     android:layout_height="match_parent"
                     android:textSize="12sp"
                     android:gravity="center"
+                    android:id="@+id/board_count"
                     android:layout_marginRight="3dp"
                     android:textColor="#848582"
                     android:text="123"/>

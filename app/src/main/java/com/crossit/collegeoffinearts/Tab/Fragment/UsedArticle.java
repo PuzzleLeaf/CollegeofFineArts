@@ -71,7 +71,6 @@ public class UsedArticle extends Fragment {
 
     //데이터 베이스
     DatabaseReference myRef;
-    private String board;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -210,8 +209,8 @@ public class UsedArticle extends Fragment {
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView = (RecyclerView) view.findViewById(R.id.used_board);
-        gridAdapter = new BoardGridItem(getContext(), boardObj);
-        linearAdapter = new BoardLinearItem(getContext(),boardObj);
+        gridAdapter = new BoardGridItem(getContext(), boardObj, usedFlag == true ? 1 : 2);
+        linearAdapter = new BoardLinearItem(getContext(),boardObj, usedFlag == true ? 1 : 2);
 
     }
 
@@ -239,18 +238,15 @@ public class UsedArticle extends Fragment {
 
     void loadView()
     {
-        linearAdapter.notifyDataSetChanged();
-        gridAdapter.notifyDataSetChanged();
-
-
-
         if(changeFlag)
         {
+            linearAdapter = new BoardLinearItem(getContext(),boardObj, usedFlag == true ? 1 : 2);
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(linearAdapter);
         }
         else
         {
+            gridAdapter = new BoardGridItem(getContext(), boardObj, usedFlag == true ? 1 : 2);
             recyclerView.setLayoutManager(gridLayoutManager);
             recyclerView.setAdapter(gridAdapter);
         }

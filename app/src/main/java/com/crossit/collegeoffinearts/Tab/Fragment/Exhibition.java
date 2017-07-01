@@ -2,6 +2,8 @@ package com.crossit.collegeoffinearts.Tab.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -15,21 +17,35 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.crossit.collegeoffinearts.R;
+import com.crossit.collegeoffinearts.Tab.Adapter.BoardGridItem;
+import com.crossit.collegeoffinearts.Tab.Adapter.BoardLinearItem;
 import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewItem;
 import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewLinearItem;
+import com.crossit.collegeoffinearts.Tab.Dialog.Loading;
+import com.crossit.collegeoffinearts.Tab.models.BoardObject;
+import com.crossit.collegeoffinearts.myDataBase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Exhibition extends Fragment implements AdapterView.OnItemSelectedListener {
 
+    View view;
+    //swipe
+    SwipeRefreshLayout swipeRefreshLayout;
     //RecyclerView
-    private RecyclerViewItem gridAdapter;
-    private RecyclerViewLinearItem linearAdapter;
+    private BoardGridItem gridAdapter;
+    private BoardLinearItem linearAdapter;
     private LinearLayoutManager linearLayoutManager;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
+    private GridLayoutManager gridLayoutManager;
     private RecyclerView recyclerView;
-    private ArrayList<Integer> resId;
-    private ArrayList<String> txt;
+
+    private ArrayList<BoardObject> boardObj;
 
     //Spinner 변수 모음
     private Spinner spinner;
@@ -40,51 +56,73 @@ public class Exhibition extends Fragment implements AdapterView.OnItemSelectedLi
     private ImageView changeView;
     private boolean changeFlag = false;
 
+    Loading loading;
+
+    //데이터 베이스
+    DatabaseReference myRef;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.exhibition_board, container, false);
+        view = inflater.inflate(R.layout.exhibition_board, container, false);
 
-        dataInit();
+        loading = new Loading(view.getContext());
+        boardObj = new ArrayList<>();
+
         spinnerInit(view);
         changeViewInit(view);
         recyclerViewInit(view);
 
+        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.used_swipe);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                dataInit(view);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
         return view;
     }
 
-    //recyclerViewInit 보다 먼저 나와야 함
-    void dataInit()
-    {
-        resId = new ArrayList<>();
-        txt = new ArrayList<>();
-        for(int i=0;i<10;i++) {
-            resId.add(R.drawable.samplea);
-            txt.add("길에서 길을 만나다");
-            resId.add(R.drawable.sampled);
-            txt.add("Smart Exhibition");
-            resId.add(R.drawable.sampleb);
-            txt.add("같다? 같다!");
-            resId.add(R.drawable.samplec);
-            txt.add("Home table deco fair 2013");
-            resId.add(R.drawable.samblee);
-            txt.add("ART MARKET");
-            resId.add(R.drawable.samplef);
-            txt.add("Star Wars");
-            resId.add(R.drawable.samplea);
-            txt.add("길에서 길을 만나다");
-            resId.add(R.drawable.sampled);
-            txt.add("Smart Exhibition");
-            resId.add(R.drawable.sampleb);
-            txt.add("같다? 같다!");
-            resId.add(R.drawable.samplec);
-            txt.add("Home table deco fair 2013");
-            resId.add(R.drawable.samblee);
-            txt.add("ART MARKET");
-            resId.add(R.drawable.samplef);
-            txt.add("Star Wars");
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
+        dataInit(view);
 
+    }
+
+
+    //recyclerViewInit 보다 먼저 나와야 함
+    void dataInit(View view)
+    {
+        loading.show();
+        myRef = myDataBase.database.getReference("전시").child("게시판");
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
+                boardObj.clear();
+                while(iterator.hasNext())
+                {
+                    BoardObject boardObject = iterator.next().getValue(BoardObject.class);
+                    boardObj.add(0,boardObject);
+                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading.dismiss();
+                    }
+                }).start();
+                loadView();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -112,13 +150,16 @@ public class Exhibition extends Fragment implements AdapterView.OnItemSelectedLi
     void recyclerViewInit(View view)
     {
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        linearLayoutManager = new LinearLayoutManager(getContext());
-        linearAdapter = new RecyclerViewLinearItem(getContext(), resId,txt);
-        gridAdapter = new RecyclerViewItem(getContext(), resId,txt);
+        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        staggeredGridLayoutManager.setOrientation(StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager.setMeasurementCacheEnabled(true);
 
+        gridLayoutManager = new GridLayoutManager(getContext(),2);
+
+        linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView = (RecyclerView) view.findViewById(R.id.exhibit_board);
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        recyclerView.setAdapter(gridAdapter);
+        gridAdapter = new BoardGridItem(getContext(), boardObj, 3);
+        linearAdapter = new BoardLinearItem(getContext(),boardObj, 3);
     }
 
     void changeViewInit(View view)
@@ -141,6 +182,23 @@ public class Exhibition extends Fragment implements AdapterView.OnItemSelectedLi
                 changeFlag = !changeFlag;
             }
         });
+    }
+
+    void loadView()
+    {
+        if(changeFlag)
+        {
+            linearAdapter = new BoardLinearItem(getContext(),boardObj, 3);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(linearAdapter);
+        }
+        else
+        {
+            gridAdapter = new BoardGridItem(getContext(), boardObj, 3);
+            recyclerView.setLayoutManager(gridLayoutManager);
+            recyclerView.setAdapter(gridAdapter);
+        }
+
     }
     //spinner 선택 이벤트 구현
     @Override

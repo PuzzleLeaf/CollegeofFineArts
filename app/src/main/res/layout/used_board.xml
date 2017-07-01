@@ -2,7 +2,6 @@
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/used_swipe">
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,6 +84,7 @@
                 android:id="@+id/used_board"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp">
 

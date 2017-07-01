@@ -16,8 +16,6 @@ public class myAuth {
     public static FirebaseUser mUser = null;
     public static FirebaseAuth mAuth = null;
 
-    public static FirebaseDatabase database = FirebaseDatabase.getInstance();
-
     public static String userId = "non";
     public static String userEmail = null;
     public static String userName = null;

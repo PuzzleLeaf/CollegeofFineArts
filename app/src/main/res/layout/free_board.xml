@@ -1,53 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/used_swipe"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-        <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
-            android:id="@+id/fontTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="자유게시판 입니다."
-            android:textColor="#6d808d"
-            android:textSize="12sp" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="right|center">
-            <Spinner
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:layout_marginRight="4dp"
-                android:background="@drawable/filter"
-                android:id="@+id/free_board_spinner"/>
-            <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:textSize="13sp"
-                android:id="@+id/free_board_spinner_text"
-                android:gravity="center"
-                android:text="판매 완료"/>
-        </LinearLayout>
-    </LinearLayout>
+    android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#f5f5f5">
-        <android.support.v7.widget.RecyclerView
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
+                android:id="@+id/fontTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="자유게시판 입니다."
+                android:textColor="#6d808d"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/free_board_spinner"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginRight="4dp"
+                    android:background="@drawable/filter" />
+
+                <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
+                    android:id="@+id/free_board_spinner_text"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="판매 완료"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:id="@+id/free_board">
-        </android.support.v7.widget.RecyclerView>
+            android:background="#f5f5f5"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/free_board"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
