@@ -7,10 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.crossit.collegeoffinearts.R;
-import com.crossit.collegeoffinearts.Tab.Dialog.LoginDialog;
 import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewNoImageLinearItem;
 
 import java.util.ArrayList;
@@ -23,12 +21,11 @@ public class MyPage extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<String> txt;
 
-    LoginDialog loginDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mypage, container, false);
-        loginDialog = new LoginDialog(getContext());
+
         dataInit();
         settingBtnInit(view);
         recyclerViewInit(view);
@@ -50,13 +47,6 @@ public class MyPage extends Fragment {
 
     void settingBtnInit(View view)
     {
-        ImageView setting = (ImageView)view.findViewById(R.id.setting);
-        setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginDialog.show();
-            }
-        });
     }
     //뷰 초기화 및 설정
     void recyclerViewInit(View view)

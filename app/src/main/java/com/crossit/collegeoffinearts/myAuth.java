@@ -12,7 +12,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 
-public class myAuth {
+public class MyAuth {
     public static FirebaseUser mUser = null;
     public static FirebaseAuth mAuth = null;
 

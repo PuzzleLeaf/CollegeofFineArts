@@ -15,10 +15,9 @@ import android.widget.TextView;
 
 import com.crossit.collegeoffinearts.R;
 import com.crossit.collegeoffinearts.Tab.Adapter.BoardLinearNoImgItem;
-import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewNoImageLinearItem;
-import com.crossit.collegeoffinearts.Tab.Dialog.Loading;
+import com.crossit.collegeoffinearts.Tab.Dialog.LoadingDialog;
 import com.crossit.collegeoffinearts.Tab.models.BoardObject;
-import com.crossit.collegeoffinearts.myDataBase;
+import com.crossit.collegeoffinearts.MyDataBase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,8 +30,6 @@ public class Free extends Fragment {
     View view;
     //swipe
     SwipeRefreshLayout swipeRefreshLayout;
-
-    Loading loading;
 
     //RecyclerView
     private BoardLinearNoImgItem linearNoImgAdapter;
@@ -51,8 +48,6 @@ public class Free extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.free_board, container, false);
-
-        loading = new Loading(view.getContext());
         boardObj = new ArrayList<>();
         spinnerInit(view);
         recyclerViewInit(view);
@@ -77,10 +72,8 @@ public class Free extends Fragment {
 
     //recyclerViewInit 보다 먼저 나와야 함
     void dataInit(View view) {
-
-        loading.show();
-
-        myRef = myDataBase.database.getReference("자유").child("게시판");
+        LoadingDialog.loadingShow();
+        myRef = MyDataBase.database.getReference("자유").child("게시판");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -91,12 +84,7 @@ public class Free extends Fragment {
                     BoardObject boardObject = iterator.next().getValue(BoardObject.class);
                     boardObj.add(0,boardObject);
                 }
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        loading.dismiss();
-                    }
-                }).start();
+//                LoadingCtrl.thread.start();
                 loadView();
             }
             @Override
@@ -108,8 +96,7 @@ public class Free extends Fragment {
     }
 
     //정렬 메뉴 초기화
-    void spinnerInit(View view)
-    {
+    void spinnerInit(View view) {
         //Spinner Start
         spinner = (Spinner)view.findViewById(R.id.free_board_spinner);
         option_text = (TextView)view.findViewById(R.id.free_board_spinner_text);
@@ -147,10 +134,8 @@ public class Free extends Fragment {
         recyclerView.setAdapter(linearNoImgAdapter);
     }
 
-    void loadView()
-    {
-        linearNoImgAdapter = new BoardLinearNoImgItem(getContext(),boardObj,5);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(linearNoImgAdapter);
+    void loadView() {
+        linearNoImgAdapter.notifyDataSetChanged();
+        LoadingDialog.loadingDismiss();
     }
 }

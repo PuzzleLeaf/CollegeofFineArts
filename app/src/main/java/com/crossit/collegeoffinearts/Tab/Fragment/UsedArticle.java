@@ -1,7 +1,6 @@
 package com.crossit.collegeoffinearts.Tab.Fragment;
 
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,25 +8,22 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.crossit.collegeoffinearts.R;
 import com.crossit.collegeoffinearts.Tab.Adapter.BoardGridItem;
 import com.crossit.collegeoffinearts.Tab.Adapter.BoardLinearItem;
-import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewItem;
-import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewLinearItem;
-import com.crossit.collegeoffinearts.Tab.Dialog.Loading;
+import com.crossit.collegeoffinearts.Tab.Adapter.GlobalChecker;
+import com.crossit.collegeoffinearts.Tab.Dialog.LoadingDialog;
 import com.crossit.collegeoffinearts.Tab.models.BoardObject;
-import com.crossit.collegeoffinearts.myDataBase;
+import com.crossit.collegeoffinearts.MyDataBase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +42,6 @@ public class UsedArticle extends Fragment {
     private BoardLinearItem linearAdapter;
     private LinearLayoutManager linearLayoutManager;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
-    private GridLayoutManager gridLayoutManager;
     private RecyclerView recyclerView;
 
     private ArrayList<BoardObject> boardObj;
@@ -67,7 +62,6 @@ public class UsedArticle extends Fragment {
     private String buy = "#827c7c";
     private String sell = "#dadbd6";
 
-    Loading loading;
 
     //데이터 베이스
     DatabaseReference myRef;
@@ -76,9 +70,7 @@ public class UsedArticle extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.used_board, container, false);
 
-        loading = new Loading(view.getContext());
         boardObj = new ArrayList<>();
-
         textViewInit(view);
         recyclerViewInit(view);
         spinnerInit(view);
@@ -100,7 +92,6 @@ public class UsedArticle extends Fragment {
     public void onResume() {
         super.onResume();
         dataInit(view);
-
     }
 
     private void textViewInit(View view)
@@ -114,6 +105,7 @@ public class UsedArticle extends Fragment {
                     usedBuy.setTextColor(Color.parseColor(buy));
                     usedSell.setTextColor(Color.parseColor(sell));
                 }
+                GlobalChecker.usedArticleFlag = 1;
                 usedFlag = true;
                 dataInit(v);
             }
@@ -125,6 +117,7 @@ public class UsedArticle extends Fragment {
                     usedSell.setTextColor(Color.parseColor(buy));
                     usedBuy.setTextColor(Color.parseColor(sell));
                 }
+                GlobalChecker.usedArticleFlag = 2;
                 usedFlag = false;
                 dataInit(v);
             }
@@ -134,12 +127,13 @@ public class UsedArticle extends Fragment {
     //recyclerViewInit 보다 먼저 나와야 함
     void dataInit(View view)
     {
-        loading.show();
-        if(!usedFlag)
-            myRef = myDataBase.database.getReference("중고").child("팝니다").child("게시판");
-        else
-            myRef = myDataBase.database.getReference("중고").child("삽니다").child("게시판");
-
+        LoadingDialog.loadingShow();
+        if(!usedFlag) {
+            myRef = MyDataBase.database.getReference("중고").child("팝니다").child("게시판");
+        }
+        else {
+            myRef = MyDataBase.database.getReference("중고").child("삽니다").child("게시판");
+        }
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -151,12 +145,6 @@ public class UsedArticle extends Fragment {
                     BoardObject boardObject = iterator.next().getValue(BoardObject.class);
                     boardObj.add(0,boardObject);
                 }
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        loading.dismiss();
-                    }
-                }).start();
                 loadView();
             }
             @Override
@@ -168,8 +156,7 @@ public class UsedArticle extends Fragment {
     }
 
     //정렬 메뉴 초기화
-    void spinnerInit(View view)
-    {
+    void spinnerInit(View view) {
         //Spinner Start
         spinner = (Spinner)view.findViewById(R.id.used_board_spinner);
         option_text = (TextView)view.findViewById(R.id.used_board_spinner_text);
@@ -187,7 +174,6 @@ public class UsedArticle extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 option_text.setText(option.getItem(position));
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -201,21 +187,22 @@ public class UsedArticle extends Fragment {
     void recyclerViewInit(View view)
     {
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        staggeredGridLayoutManager.setOrientation(StaggeredGridLayoutManager.VERTICAL);
-        staggeredGridLayoutManager.setMeasurementCacheEnabled(true);
-
-        gridLayoutManager = new GridLayoutManager(getContext(),2);
-
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView = (RecyclerView) view.findViewById(R.id.used_board);
-        gridAdapter = new BoardGridItem(getContext(), boardObj, usedFlag == true ? 1 : 2);
-        linearAdapter = new BoardLinearItem(getContext(),boardObj, usedFlag == true ? 1 : 2);
+        gridAdapter = new BoardGridItem(getContext(), boardObj);
+        linearAdapter = new BoardLinearItem(getContext(),boardObj);
 
+        if(!changeFlag) {
+            recyclerView.setLayoutManager(staggeredGridLayoutManager);
+            recyclerView.setAdapter(gridAdapter);
+        }
+        else {
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(linearAdapter);
+        }
     }
 
-    void changeViewInit(View view)
-    {
+    void changeViewInit(View view) {
         changeView = (ImageView)view.findViewById(R.id.view_change);
         changeView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,7 +215,7 @@ public class UsedArticle extends Fragment {
                 else
                 {
                     changeView.setImageResource(R.drawable.board_align);
-                    recyclerView.setLayoutManager(gridLayoutManager);
+                    recyclerView.setLayoutManager(staggeredGridLayoutManager);
                     recyclerView.setAdapter(gridAdapter);
                 }
                 changeFlag = !changeFlag;
@@ -236,20 +223,15 @@ public class UsedArticle extends Fragment {
         });
     }
 
-    void loadView()
-    {
-        if(changeFlag)
-        {
-            linearAdapter = new BoardLinearItem(getContext(),boardObj, usedFlag == true ? 1 : 2);
-            recyclerView.setLayoutManager(linearLayoutManager);
-            recyclerView.setAdapter(linearAdapter);
+    void loadView() {
+        if(changeFlag) {
+            linearAdapter.notifyDataSetChanged();
         }
-        else
-        {
-            gridAdapter = new BoardGridItem(getContext(), boardObj, usedFlag == true ? 1 : 2);
-            recyclerView.setLayoutManager(gridLayoutManager);
-            recyclerView.setAdapter(gridAdapter);
+        else {
+            gridAdapter.notifyDataSetChanged();
+            gridAdapter.notifyItemRangeChanged(0,gridAdapter.getItemCount());
         }
+        LoadingDialog.loadingDismiss();
 
     }
 

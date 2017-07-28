@@ -104,6 +104,7 @@
                 android:layout_height="80dp"
                 android:gravity="bottom"
                 android:layout_marginLeft="10dp"
+                android:id="@+id/write_image_caption"
                 android:textColor="#b1b1b1"
                 android:text="클릭하여 이미지 파일을 첨부하세요."/>
         </LinearLayout>
@@ -120,6 +121,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
+                android:id="@+id/write_cancel"
                 android:layout_marginRight="5dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/write_cancel" />

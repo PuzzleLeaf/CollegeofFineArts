@@ -71,6 +71,7 @@
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:layout_marginRight="5dp"
+                        android:visibility="invisible"
                         android:id="@+id/board_like"
                         android:src="@drawable/like" />
                 </LinearLayout>

@@ -22,6 +22,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:id="@+id/mypage"
+                android:visibility="invisible"
                 android:src="@drawable/my"/>
             <LinearLayout
                 android:layout_width="0dp"
@@ -38,6 +39,7 @@
                 android:id="@+id/likepage"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:visibility="invisible"
                 android:src="@drawable/like" />
         </LinearLayout>
     </android.support.v7.widget.Toolbar>
@@ -71,6 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:id="@+id/search_btn"
             android:gravity="center"
             android:orientation="vertical">
             <ImageView

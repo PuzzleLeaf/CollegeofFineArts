@@ -9,10 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.crossit.collegeoffinearts.R;
-import com.crossit.collegeoffinearts.Tab.Dialog.Loading;
 import com.crossit.collegeoffinearts.Tab.models.CommentObject;
-import com.crossit.collegeoffinearts.myAuth;
-import com.crossit.collegeoffinearts.myDataBase;
+import com.crossit.collegeoffinearts.MyAuth;
+import com.crossit.collegeoffinearts.MyDataBase;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class CommentItem extends RecyclerView.Adapter<CommentItem.ViewHolder> {
             }
         });
 
-        if(myAuth.userId !=null && obj.get(position).getUser_id().equals(myAuth.userId))
+        if(MyAuth.userId !=null && obj.get(position).getUser_id().equals(MyAuth.userId))
             holder.delete.setVisibility(View.VISIBLE);
         else
             holder.delete.setVisibility(View.GONE);
@@ -64,17 +63,16 @@ public class CommentItem extends RecyclerView.Adapter<CommentItem.ViewHolder> {
     {
         DatabaseReference mRef;
         if(commentCheck == 1)
-            mRef = myDataBase.database.getReference("중고").child("삽니다").child("댓글").child(boardId).child(obj.get(position).getComment_id());
+            mRef = MyDataBase.database.getReference("중고").child("삽니다").child("댓글").child(boardId).child(obj.get(position).getComment_id());
         else if(commentCheck == 2)
-            mRef = myDataBase.database.getReference("중고").child("팝니다").child("댓글").child(boardId).child(obj.get(position).getComment_id());
+            mRef = MyDataBase.database.getReference("중고").child("팝니다").child("댓글").child(boardId).child(obj.get(position).getComment_id());
         else if(commentCheck == 3)
-            mRef = myDataBase.database.getReference("전시").child("댓글").child(boardId).child(obj.get(position).getComment_id());
+            mRef = MyDataBase.database.getReference("전시").child("댓글").child(boardId).child(obj.get(position).getComment_id());
         else if(commentCheck == 4)
-            mRef = myDataBase.database.getReference("구하기").child("댓글").child(boardId).child(obj.get(position).getComment_id());
+            mRef = MyDataBase.database.getReference("구하기").child("댓글").child(boardId).child(obj.get(position).getComment_id());
         else
-            mRef = myDataBase.database.getReference("자유").child("댓글").child(boardId).child(obj.get(position).getComment_id());
+            mRef = MyDataBase.database.getReference("자유").child("댓글").child(boardId).child(obj.get(position).getComment_id());
         mRef.setValue(null);
-        Log.d("qwe","???");
     }
 
 

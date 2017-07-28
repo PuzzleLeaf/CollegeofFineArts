@@ -1,27 +1,31 @@
 package com.crossit.collegeoffinearts;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.crossit.collegeoffinearts.Tab.Adapter.GlobalChecker;
+import com.crossit.collegeoffinearts.Tab.Dialog.Loading;
+import com.crossit.collegeoffinearts.Tab.Dialog.LoadingDialog;
 import com.crossit.collegeoffinearts.Tab.TabIcon;
 import com.crossit.collegeoffinearts.Tab.TabPagerAdapter;
 import com.crossit.collegeoffinearts.Tab.WriteBoard;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private TabPagerAdapter pagerAdapter;
+
     //상단 탭 레이아웃
     private TabLayout tabLayout;
     private TabIcon[] tabIcons = new TabIcon[4];
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView mypage;
     ImageView likePage;
 
+
     //로그인 체크
     FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -40,12 +45,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        setPermission(); // 카메라를 위한 권한 물어보기
         TabInit();
         WriteBtnInit();
+        searchBtnInit();
         myPageBtnInit();
         likePageBtnInit();
 
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LoadingDialog.loading = new Loading(this);
     }
 
     private void TabInit() {
@@ -53,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false); //앱 이름 안보이게 설정
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -79,10 +94,12 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(pagerAdapter.getBundleCount()>0) {
-                    resReset();
-                    pagerAdapter.notifyDataSetChanged();
-                }
+
+                if(tab.getPosition()==0)
+                    GlobalChecker.usedArticleFlag = 2;
+                else if(tab.getPosition()==1)
+                    GlobalChecker.usedArticleFlag = 3;
+
                 viewPager.setCurrentItem(tab.getPosition());
                 tabIcons[tab.getPosition()].changeImage(tab_p[tab.getPosition()]);
                 tabLayout.getTabAt(tab.getPosition()).setCustomView(tabIcons[tab.getPosition()].getView());
@@ -107,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         write_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myAuth.userId == null || myAuth.userId.equals("non"))
+                if(MyAuth.userId == null || MyAuth.userId.equals("non"))
                 {
                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                     startActivity(intent);
@@ -121,18 +138,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void searchBtnInit(){
+        LinearLayout search_btn = (LinearLayout)findViewById(R.id.search_btn);
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 
     //back버튼 클릭시 원래 메뉴로
     @Override
     public void onBackPressed() {
-        if(pagerAdapter.getBundleCount()>0)
-        {
-            viewPager.setCurrentItem(tabLayout.getSelectedTabPosition());
-            resReset();
-            pagerAdapter.notifyDataSetChanged();
-        }
-        else
-           super.onBackPressed();
+        super.onBackPressed();
     }
 
     private void myPageBtnInit()
@@ -141,19 +161,11 @@ public class MainActivity extends AppCompatActivity {
         mypage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resReset();
                 mypage.setImageResource(R.drawable.my_p);
                 pagerAdapter.setBundle(String.valueOf(tabLayout.getSelectedTabPosition()),"mypage");
                 pagerAdapter.notifyDataSetChanged();
             }
         });
-    }
-
-    private void resReset()
-    {
-        pagerAdapter.clearBundle();
-        likePage.setImageResource(R.drawable.like);
-        mypage.setImageResource(R.drawable.my);
     }
 
     private void likePageBtnInit()
@@ -162,7 +174,6 @@ public class MainActivity extends AppCompatActivity {
         likePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resReset();
                 likePage.setImageResource(R.drawable.like_p);
                 pagerAdapter.setBundle(String.valueOf(tabLayout.getSelectedTabPosition()),"like");
                 pagerAdapter.notifyDataSetChanged();
@@ -170,5 +181,44 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+    //카메라 갤러리 권한
+    void setPermission()
+    {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED) {
+            // 이 권한을 필요한 이유를 설명해야하는가?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CAMERA)) {
+                // 다이어로그같은것을 띄워서 사용자에게 해당 권한이 필요한 이유에 대해 설명합니다
+                // 해당 설명이 끝난뒤 requestPermissions()함수를 호출하여 권한허가를 요청해야 합니다
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.CAMERA}, 1);
+                // 필요한 권한과 요청 코드를 넣어서 권한허가요청에 대한 결과를 받아야 합니다
+            }
+        }
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
+            // 이 권한을 필요한 이유를 설명해야하는가?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // 다이어로그같은것을 띄워서 사용자에게 해당 권한이 필요한 이유에 대해 설명합니다
+                // 해당 설명이 끝난뒤 requestPermissions()함수를 호출하여 권한허가를 요청해야 합니다
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                // 필요한 권한과 요청 코드를 넣어서 권한허가요청에 대한 결과를 받아야 합니다
+            }
+        }
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED) {
+            // 이 권한을 필요한 이유를 설명해야하는가?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // 다이어로그같은것을 띄워서 사용자에게 해당 권한이 필요한 이유에 대해 설명합니다
+                // 해당 설명이 끝난뒤 requestPermissions()함수를 호출하여 권한허가를 요청해야 합니다
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                // 필요한 권한과 요청 코드를 넣어서 권한허가요청에 대한 결과를 받아야 합니다
+            }
+        }
+
+    }
+
 
 }

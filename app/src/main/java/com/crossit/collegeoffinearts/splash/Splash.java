@@ -10,7 +10,7 @@ import android.util.Log;
 
 import com.crossit.collegeoffinearts.MainActivity;
 import com.crossit.collegeoffinearts.R;
-import com.crossit.collegeoffinearts.myAuth;
+import com.crossit.collegeoffinearts.MyAuth;
 
 
 public class Splash extends AppCompatActivity {
@@ -22,9 +22,9 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         sharedPref = getSharedPreferences("key",MODE_PRIVATE);
-        myAuth.userId = sharedPref.getString("firebaseKey", "non");
-        myAuth.userEmail = sharedPref.getString("firebaseEmail",null);
-        myAuth.userName = sharedPref.getString("firebaseName",null);
+        MyAuth.userId = sharedPref.getString("firebaseKey", "non");
+        MyAuth.userEmail = sharedPref.getString("firebaseEmail",null);
+        MyAuth.userName = sharedPref.getString("firebaseName",null);
 
 
 
@@ -46,7 +46,7 @@ public class Splash extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         overridePendingTransition(0,0);
-        Log.d("qwe",myAuth.userId);
+        Log.d("qwe", MyAuth.userId);
 
 
     }

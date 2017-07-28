@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.crossit.collegeoffinearts.R;
-import com.crossit.collegeoffinearts.Tab.Adapter.BoardGridItem;
-import com.crossit.collegeoffinearts.Tab.Adapter.BoardLinearItem;
 import com.crossit.collegeoffinearts.Tab.Adapter.BoardLinearNoImgItem;
-import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewNoImageLinearItem;
-import com.crossit.collegeoffinearts.Tab.Dialog.Loading;
+import com.crossit.collegeoffinearts.Tab.Dialog.LoadingDialog;
 import com.crossit.collegeoffinearts.Tab.models.BoardObject;
-import com.crossit.collegeoffinearts.myDataBase;
+import com.crossit.collegeoffinearts.MyDataBase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,8 +32,6 @@ public class Find extends Fragment {
     View view;
     //swipe
     SwipeRefreshLayout swipeRefreshLayout;
-
-    Loading loading;
 
     //RecyclerView
     private BoardLinearNoImgItem linearNoImgAdapter;
@@ -54,8 +50,7 @@ public class Find extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.find_board, container, false);
-
-        loading = new Loading(view.getContext());
+        Log.d("qwe","Find Call");
         boardObj = new ArrayList<>();
         spinnerInit(view);
         recyclerViewInit(view);
@@ -80,10 +75,8 @@ public class Find extends Fragment {
 
     //recyclerViewInit 보다 먼저 나와야 함
     void dataInit(View view) {
-
-        loading.show();
-
-        myRef = myDataBase.database.getReference("구하기").child("게시판");
+        LoadingDialog.loadingShow();
+        myRef = MyDataBase.database.getReference("구하기").child("게시판");
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -95,12 +88,7 @@ public class Find extends Fragment {
                     BoardObject boardObject = iterator.next().getValue(BoardObject.class);
                     boardObj.add(0,boardObject);
                 }
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        loading.dismiss();
-                    }
-                }).start();
+  //              LoadingCtrl.thread.start();
                 loadView();
             }
             @Override
@@ -150,11 +138,9 @@ public class Find extends Fragment {
         recyclerView.setAdapter(linearNoImgAdapter);
     }
 
-    void loadView()
-    {
-            linearNoImgAdapter = new BoardLinearNoImgItem(getContext(),boardObj,4);
-            recyclerView.setLayoutManager(linearLayoutManager);
-            recyclerView.setAdapter(linearNoImgAdapter);
+    void loadView() {
+        linearNoImgAdapter.notifyDataSetChanged();
+        LoadingDialog.loadingDismiss();
     }
 
 }

@@ -7,7 +7,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
-public class myDataBase {
+public class MyDataBase {
     public static FirebaseDatabase database = FirebaseDatabase.getInstance();
     public static FirebaseStorage storage = FirebaseStorage.getInstance();
     public static StorageReference storageRef = storage.getReferenceFromUrl("gs://test-e18ed.appspot.com");

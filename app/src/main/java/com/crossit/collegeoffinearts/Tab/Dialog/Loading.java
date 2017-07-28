@@ -18,5 +18,4 @@ public class Loading extends Dialog {
         setContentView(R.layout.loading);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
-
 }

@@ -7,11 +7,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.crossit.collegeoffinearts.Tab.Fragment.Exhibition;
 import com.crossit.collegeoffinearts.Tab.Fragment.Free;
-import com.crossit.collegeoffinearts.Tab.Fragment.Like;
-import com.crossit.collegeoffinearts.Tab.Fragment.MyPage;
 import com.crossit.collegeoffinearts.Tab.Fragment.UsedArticle;
 import com.crossit.collegeoffinearts.Tab.Fragment.Find;
-import com.crossit.collegeoffinearts.Tab.Fragment.Write;
 
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
 

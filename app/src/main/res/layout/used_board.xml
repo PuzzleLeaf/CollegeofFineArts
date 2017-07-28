@@ -52,6 +52,7 @@
                     android:id="@+id/used_board_spinner"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
+                    android:visibility="invisible"
                     android:layout_marginRight="4dp"
                     android:background="@drawable/filter" />
 
@@ -62,6 +63,7 @@
                     android:layout_marginRight="15dp"
                     android:gravity="center"
                     android:text="판매 완료"
+                    android:visibility="invisible"
                     android:textSize="13sp" />
 
                 <ImageView

@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:background="#00ffffff"
         android:id="@+id/camera_select"
         android:layout_marginBottom="15dp"
         android:orientation="horizontal">
@@ -18,12 +19,14 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:tint="#ffffff"
+            android:background="#00ffffff"
             android:adjustViewBounds="true"
             android:src="@drawable/camera" />
         <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:background="#00ffffff"
             android:textColor="#ffffff"
             android:layout_marginLeft="8dp"
             android:text="카메라로 사진찍기"/>
@@ -32,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:background="#00ffffff"
         android:id="@+id/gallery_select"
         android:layout_marginBottom="70dp"
         android:orientation="horizontal">
@@ -39,12 +43,14 @@
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:tint="#ffffff"
+            android:background="#00ffffff"
             android:adjustViewBounds="true"
             android:src="@drawable/gallery" />
         <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
+            android:background="#00ffffff"
             android:textColor="#ffffff"
             android:textSize="15sp"
             android:text="앨범에서 사진선택"/>

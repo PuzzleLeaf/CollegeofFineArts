@@ -3,7 +3,6 @@ package com.crossit.collegeoffinearts.Tab.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -19,11 +18,10 @@ import android.widget.TextView;
 import com.crossit.collegeoffinearts.R;
 import com.crossit.collegeoffinearts.Tab.Adapter.BoardGridItem;
 import com.crossit.collegeoffinearts.Tab.Adapter.BoardLinearItem;
-import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewItem;
-import com.crossit.collegeoffinearts.Tab.Adapter.RecyclerViewLinearItem;
 import com.crossit.collegeoffinearts.Tab.Dialog.Loading;
+import com.crossit.collegeoffinearts.Tab.Dialog.LoadingDialog;
 import com.crossit.collegeoffinearts.Tab.models.BoardObject;
-import com.crossit.collegeoffinearts.myDataBase;
+import com.crossit.collegeoffinearts.MyDataBase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,7 +40,7 @@ public class Exhibition extends Fragment implements AdapterView.OnItemSelectedLi
     private BoardLinearItem linearAdapter;
     private LinearLayoutManager linearLayoutManager;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
-    private GridLayoutManager gridLayoutManager;
+
     private RecyclerView recyclerView;
 
     private ArrayList<BoardObject> boardObj;
@@ -56,8 +54,6 @@ public class Exhibition extends Fragment implements AdapterView.OnItemSelectedLi
     private ImageView changeView;
     private boolean changeFlag = false;
 
-    Loading loading;
-
     //데이터 베이스
     DatabaseReference myRef;
 
@@ -65,13 +61,13 @@ public class Exhibition extends Fragment implements AdapterView.OnItemSelectedLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.exhibition_board, container, false);
-
-        loading = new Loading(view.getContext());
         boardObj = new ArrayList<>();
 
+
+        recyclerViewInit(view);
         spinnerInit(view);
         changeViewInit(view);
-        recyclerViewInit(view);
+
 
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.used_swipe);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -97,8 +93,8 @@ public class Exhibition extends Fragment implements AdapterView.OnItemSelectedLi
     //recyclerViewInit 보다 먼저 나와야 함
     void dataInit(View view)
     {
-        loading.show();
-        myRef = myDataBase.database.getReference("전시").child("게시판");
+        LoadingDialog.loadingShow();
+        myRef = MyDataBase.database.getReference("전시").child("게시판");
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -110,12 +106,7 @@ public class Exhibition extends Fragment implements AdapterView.OnItemSelectedLi
                     BoardObject boardObject = iterator.next().getValue(BoardObject.class);
                     boardObj.add(0,boardObject);
                 }
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        loading.dismiss();
-                    }
-                }).start();
+//                LoadingCtrl.thread.start();
                 loadView();
             }
             @Override
@@ -150,16 +141,23 @@ public class Exhibition extends Fragment implements AdapterView.OnItemSelectedLi
     void recyclerViewInit(View view)
     {
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        staggeredGridLayoutManager.setOrientation(StaggeredGridLayoutManager.VERTICAL);
-        staggeredGridLayoutManager.setMeasurementCacheEnabled(true);
-
-        gridLayoutManager = new GridLayoutManager(getContext(),2);
-
         linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView = (RecyclerView) view.findViewById(R.id.exhibit_board);
-        gridAdapter = new BoardGridItem(getContext(), boardObj, 3);
-        linearAdapter = new BoardLinearItem(getContext(),boardObj, 3);
+        gridAdapter = new BoardGridItem(getContext(), boardObj);
+        linearAdapter = new BoardLinearItem(getContext(),boardObj);
+
+        if(!changeFlag)
+        {
+            recyclerView.setLayoutManager(staggeredGridLayoutManager);
+            recyclerView.setAdapter(gridAdapter);
+        }
+        else
+        {
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(linearAdapter);
+        }
+
+
     }
 
     void changeViewInit(View view)
@@ -188,16 +186,14 @@ public class Exhibition extends Fragment implements AdapterView.OnItemSelectedLi
     {
         if(changeFlag)
         {
-            linearAdapter = new BoardLinearItem(getContext(),boardObj, 3);
-            recyclerView.setLayoutManager(linearLayoutManager);
-            recyclerView.setAdapter(linearAdapter);
+            linearAdapter.notifyDataSetChanged();
         }
         else
         {
-            gridAdapter = new BoardGridItem(getContext(), boardObj, 3);
-            recyclerView.setLayoutManager(gridLayoutManager);
-            recyclerView.setAdapter(gridAdapter);
+            gridAdapter.notifyDataSetChanged();
+            gridAdapter.notifyItemRangeChanged(0,gridAdapter.getItemCount());
         }
+        LoadingDialog.loadingDismiss();
 
     }
     //spinner 선택 이벤트 구현

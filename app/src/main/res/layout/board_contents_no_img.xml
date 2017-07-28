@@ -2,14 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f5f5f5"
+    android:background="#ffffff"
     android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#ffffff">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -46,7 +44,6 @@
             android:gravity="center"
             android:textSize="13sp" />
     </LinearLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -58,7 +55,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,7 +63,7 @@
                 android:id="@+id/contents_title"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:backgroundTint="#b1b1b1"
+                android:background="@drawable/slice_bg"
                 android:gravity="center_vertical"
                 android:textColorHint="#b1b1b1"
                 android:textSize="20sp" />
@@ -75,75 +71,143 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
+                    android:id="@+id/contents_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/contents_date" />
+                    android:textSize="10sp" />
+
                 <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
+                    android:id="@+id/contents_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:id="@+id/contents_name" />
+                    android:textSize="10sp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="right">
+                    android:gravity="right"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:visibility="invisible"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/like" />
+                    <TextView
+                        android:id="@+id/contents_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp" />
                     <ImageView
                         android:layout_width="12dp"
                         android:layout_height="12dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/view_count"/>
+                        android:src="@drawable/view_count" />
                     <TextView
+                        android:id="@+id/contents_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/contents_count"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp" />
                 </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_marginTop="5dp"
+            android:layout_weight="1"
             android:orientation="vertical">
-            <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
-                android:id="@+id/contents_main"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="#f5f5f5"
-                android:textSize="14sp" />
-            <android.support.v7.widget.RecyclerView
+                android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <com.crossit.collegeoffinearts.Tab.CustomView.FontTextView
+                        android:id="@+id/contents_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#f5f5f5"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </ScrollView>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:id="@+id/comment_view">
-
-            </android.support.v7.widget.RecyclerView>
+                android:layout_height="20dp"
+                android:gravity="right"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/write_modify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="[수정]" />
+                <TextView
+                    android:id="@+id/write_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:text="[삭제]" />
+            </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layerType="software"
+                android:src="@drawable/dotted" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="13dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/filter" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="3dp"
+                    android:text="덧글"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/comment_view"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:background="#f5f5f5"></android.support.v7.widget.RecyclerView>
         </LinearLayout>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layerType="software"
-            android:src="@drawable/dotted" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
+
             <EditText
-                android:layout_width="0dp"
-                android:layout_weight="1"
                 android:id="@+id/comment_edit"
-                android:layout_height="match_parent" />
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/box"
+                android:padding="3dp" />
+
             <ImageView
                 android:id="@+id/comment_commit"
                 android:layout_width="30dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center_vertical"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/write_submit" />

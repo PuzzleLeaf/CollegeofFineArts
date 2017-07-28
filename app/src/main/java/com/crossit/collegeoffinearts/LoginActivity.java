@@ -1,18 +1,12 @@
 package com.crossit.collegeoffinearts;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -29,8 +23,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by cmtyx on 2017-06-22.
@@ -57,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
-        myAuth.mAuth = FirebaseAuth.getInstance();
+        MyAuth.mAuth = FirebaseAuth.getInstance();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, new GoogleApiClient.OnConnectionFailedListener() {
@@ -87,8 +79,8 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("firebaseName",nickName.getText().toString());
                     editor.commit();
 
-                    myAuth.userEmail = userEmail;
-                    myAuth.userId = userId;
+                    MyAuth.userEmail = userEmail;
+                    MyAuth.userId = userId;
                 } else {
                    resetData();
                 }
@@ -112,14 +104,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        myAuth.mAuth.addAuthStateListener(mAuthListener);
+        MyAuth.mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         if (mAuthListener != null) {
-            myAuth.mAuth.removeAuthStateListener(mAuthListener);
+            MyAuth.mAuth.removeAuthStateListener(mAuthListener);
         }
     }
 
@@ -134,15 +126,15 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("firebaseName",null);
         editor.commit();
 
-        myAuth.mUser = null;
-        myAuth.userEmail = null;
-        myAuth.userId = null;
+        MyAuth.mUser = null;
+        MyAuth.userEmail = null;
+        MyAuth.userId = null;
     }
 
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        myAuth.mAuth.signInWithCredential(credential)
+        MyAuth.mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -152,11 +144,11 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         else
                         {
-                            myAuth.mUser = task.getResult().getUser();
+                            MyAuth.mUser = task.getResult().getUser();
                             sharedPref = getSharedPreferences("key",MODE_PRIVATE);
-                            myAuth.userId = sharedPref.getString("firebaseKey", "non");
-                            myAuth.userEmail = sharedPref.getString("firebaseEmail",null);
-                            myAuth.userName = sharedPref.getString("firebaseName",null);
+                            MyAuth.userId = sharedPref.getString("firebaseKey", "non");
+                            MyAuth.userEmail = sharedPref.getString("firebaseEmail",null);
+                            MyAuth.userName = sharedPref.getString("firebaseName",null);
                             Toast.makeText(getApplicationContext(), "환영합니다.",
                                     Toast.LENGTH_SHORT).show();
                             finish();

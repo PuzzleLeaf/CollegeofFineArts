@@ -12,13 +12,25 @@ public class BoardObject {
     String user_name;
     String time;
     String image;
+    String imageDir;
     String board_id;
     String count;
+
+    int tempChecker;
+
+
 
     public BoardObject()
     {
 
     }
+
+    public BoardObject(String title, String contents) {
+        this.title = title;
+        this.contents = contents;
+    }
+
+
     public BoardObject(String title, String contents, String user_id, String user_email, String user_name, String board_id) {
         this.title = title;
         this.contents = contents;
@@ -29,15 +41,15 @@ public class BoardObject {
         this.board_id = board_id;
         this.count = "1";
         this.image = "non";
+        this.imageDir = "non";
 
         //현재 시간
         long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat sdfNow = new SimpleDateFormat("YY-MM-dd");
         this.time = sdfNow.format(date);
-
     }
-    public BoardObject(String title, String contents, String user_id, String user_email, String user_name, String board_id, String image) {
+    public BoardObject(String title, String contents, String user_id, String user_email, String user_name, String board_id, String image, String imageDir) {
         this.title = title;
         this.contents = contents;
         this.user_id = user_id;
@@ -47,6 +59,7 @@ public class BoardObject {
         this.board_id = board_id;
         this.count = "1";
         this.image = image;
+        this.imageDir = imageDir;
 
         //현재 시간
         long now = System.currentTimeMillis();
@@ -128,4 +141,19 @@ public class BoardObject {
         this.count = count;
     }
 
+    public String getImageDir() {
+        return imageDir;
+    }
+
+    public void setImageDir(String imageDir) {
+        this.imageDir = imageDir;
+    }
+
+    public int getTempChecker() {
+        return tempChecker;
+    }
+
+    public void setTempChecker(int tempChecker) {
+        this.tempChecker = tempChecker;
+    }
 }
